@@ -2,9 +2,12 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const homeRoute = require("./routes/home");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/users");
 const postRoute = require("./routes/posts");
+const resumeRoute = require("./routes/resume");
+const resumeAuthRoute = require("./routes/resumeAuth");
 const categoryRoute = require("./routes/categories");
 const multer = require("multer");
 const cors = require("cors");
@@ -35,9 +38,12 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
   res.status(200).json("File has been uploaded");
 });
 
+app.use("/", homeRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
+app.use("/api/resume", resumeRoute);
+app.use("/api/resume/auth", resumeAuthRoute);
 app.use("/api/categories", categoryRoute);
 
 app.use(express.static(path.join(__dirname, "/client/build")));
